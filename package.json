@@ -7,6 +7,20 @@
   "scripts": {
     "test": "node test.js"
   },
-  "author": "You",
+  "author": "Me",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "request": "*",
+    "request-promise-native": "*"
+  },
+  "devDependencies": {
+    "debug": "*",
+    "dotenv": "^4.0.0",
+    "nock": "*",
+    "sinon": "*",
+    "tape": "*"
+  },
   "license": "MIT"
 }
