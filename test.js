@@ -41,6 +41,19 @@ test('getMagicNumberSqrt: again with 12345 as magic number', async (t) => {
   })
 });
 
+test('getMagicNumberSqrt: check not equality', async (t) => {
+  var getMagicNumberSqrt = require('./index.js')
+
+  nock(BASE_URL_FQDN)
+    .get(BASE_URL_URI)
+    .reply(200, 12345)
+
+  getMagicNumberSqrt(1, 2, (err, magicSqrt) => {
+    t.notEqual(magicSqrt, Math.sqrt(1234));
+    t.end();
+  })
+});
+
 test('...after.', (t) => {
   nock.enableNetConnect()
   t.end()
