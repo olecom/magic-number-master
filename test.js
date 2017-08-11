@@ -6,7 +6,7 @@ var test = require('tape');
 var nock = require('nock');
 
 const BASE_URL_FQDN = 'http://apps.wavana.com'
-const BASE_URL_URI = /magicnumber.*/
+const BASE_URL_URI = /magicnumber[?]x=[0-9.]+[&]y=[0-9.]+/
 
 // disable anything to go out the tests
 test('Before...', (t) => {
@@ -53,6 +53,20 @@ test('getMagicNumberSqrt: check not equality', async (t) => {
     t.end();
   })
 });
+
+test('getMagicNumberSqrt: query string params', async (t) => {
+  var getMagicNumberSqrt = require('./index.js')
+
+  nock(BASE_URL_FQDN)
+    .get(BASE_URL_URI)
+    .reply(200, 12345)
+
+  getMagicNumberSqrt('not a number', 2, (err, magicSqrt) => {
+    if (err) t.end()
+    else t.end('must not get here: wrong number argument')
+  })
+});
+
 
 test('...after.', (t) => {
   nock.enableNetConnect()
