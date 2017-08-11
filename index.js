@@ -9,15 +9,22 @@ const web = require('request-promise-native')
  * return the square root of a magic number to an asynchronous callback function
  */
 async function getMagicNumberSqrt(x, y, callback) {
-  const magicNumber = await web({
-    headers: {
-      'User-Agent': 'Node.JS/8'
-    },
-    method: 'get', json: true,
-    url: `${BASE_URL}?x=${+x}&y=${+y}`
-  })
+  let magicNumber
+  let err
 
-  return setImmediate(() => callback(null, Math.sqrt(magicNumber)))
+  try {
+    magicNumber = await web({
+      headers: {
+        'User-Agent': 'Node.JS/8'
+      },
+      method: 'get', json: true,
+      url: `${BASE_URL}?x=${+x}&y=${+y}`
+    })
+  } catch (ex) {
+    err = ex
+  }
+
+  return setImmediate(() => callback(err, Math.sqrt(magicNumber)))
 }
 
 function callbackHandler(err, marigNumSqrt){
